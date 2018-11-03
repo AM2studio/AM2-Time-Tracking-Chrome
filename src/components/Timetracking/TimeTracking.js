@@ -32,28 +32,22 @@ class AddTime extends Component {
     componentWillMount() {
         this.initialState = this.state;
         // Projects
-        chrome.storage.local.get('projects', storage => {
-            if (!storage.projects) {
-                this.setState({ projects: JSON.parse(storage.projects) });
-            } else {
-                const api = new WP_API();
-                api.getPosts('projects')
-                    .then(result => {
-                        const posts = result.map(post => ({
-                            id: post.id,
-                            title: post.title,
-                            company: post.company_name
-                        }));
-                        chrome.storage.local.set({ projects: JSON.stringify(posts) });
-                        this.setState({ projects: posts });
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
-                api.getTime().then(result => {
-                    this.setState({ totalTime: result });
-                });
-            }
+        const api = new WP_API();
+        api.getPosts('projects')
+            .then(result => {
+                const posts = result.map(post => ({
+                    id: post.id,
+                    title: post.title,
+                    company: post.company_name
+                }));
+                chrome.storage.local.set({ projects: JSON.stringify(posts) });
+                this.setState({ projects: posts });
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        api.getTime().then(result => {
+            this.setState({ totalTime: result });
         });
     }
 
