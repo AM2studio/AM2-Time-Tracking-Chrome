@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500');
+
 html,
 body,
 div,
@@ -286,8 +288,6 @@ input[type='submit'] {
 .column {
     float: left;
     margin: 0;
-    padding-left: 15px;
-    padding-right: 15px;
 }
 
 .column.flow-opposite {
@@ -460,35 +460,29 @@ input[type='submit'] {
     text-decoration: none;
 }
 
-.am2-chrome-timetracking-app {
-    width: 420px;
-    height: 100%;
-    position: fixed;
-    top: 0px;
-    right: 0px;
-    z-index: 2147483647;
+#am2-chrome-timetracking-app {
+    width: 360px;
+    height: 800px;
     background-color: white;
-}
-.am2-chrome-timetracking-app iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
 }
 
 .widget .section__header {
-    padding: 15px 20px;
+    padding: 10px 20px;
     background-color: #39b34a;
     border-left: 0;
 }
 .widget .section__header .section__title {
-    font-size: 21px;
     color: #fff;
+    font-size: 14px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 600;
 }
 label {
     color: #9e9e9e;
 }
 .form__row .column {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 .picker_container {
     margin: 20px auto;
