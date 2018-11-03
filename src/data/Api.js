@@ -39,22 +39,26 @@ class WP_API {
     }
 
     set() {
-        return axios({
-            method: 'post',
-            url: this.url,
-            headers: {
-                Authorization: `Bearer ${this.auth.getSessionToken()}`
-            },
-            data: this.dataToUpdate
-        })
-            .then(response => {
-                console.log(response.data);
-                return response.data;
-            })
-            .catch(error => {
-                // handle error
-                console.log(error);
-            });
+        return new Promise((resolve, reject) => {
+            chrome.storage.local.get('crmTokenKey', items =>
+                axios({
+                    method: 'post',
+                    url: this.url,
+                    headers: {
+                        Authorization: `Bearer ${items.crmTokenKey}`
+                    },
+                    data: this.dataToUpdate
+                })
+                    .then(response => {
+                        console.log(response.data);
+                        resolve(response.data);
+                    })
+                    .catch(error => {
+                        // handle error
+                        reject(error);
+                    })
+            );
+        });
     }
 }
 

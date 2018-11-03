@@ -19,7 +19,7 @@ class AddTime extends Component {
             billable_hours: '01:00',
             project: '',
             projects: [],
-            job_type: 'Dev',
+            job_type: { id: '2', title: 'Dev' },
             asana_url: '',
             comment: '',
             msgText: '',
