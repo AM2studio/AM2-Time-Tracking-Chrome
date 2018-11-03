@@ -53,9 +53,9 @@ class WP_AUTH {
                 password
             })
             .then(response => {
-                console.log(response);
                 chrome.storage.local.set({ [this.tokenKey]: response.data.token });
                 chrome.storage.local.set({ [this.userName]: response.data.user_display_name });
+                return response.status;
                 // Set projects maybe
             })
             .catch(error => {

@@ -462,7 +462,7 @@ input[type='submit'] {
 
 #am2-chrome-timetracking-app {
     width: 360px;
-    height: 800px;
+    overflow: hidden;
     background-color: white;
 }
 

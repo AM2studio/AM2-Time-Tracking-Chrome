@@ -19,11 +19,11 @@ const Login = props => {
                         </div>
                         {loader ? (
                             <div className="loaderWidget login-animation">
-                                <img alt="loader" src={animation} width="400" height="300" />
+                                <img alt="loader" src={animation} width="290" height="220" />
                             </div>
                         ) : (
                             <React.Fragment>
-                                <span className="login100-form-title p-b-34">Account Login</span>
+                                <span className="login100-form-title p-b-239">Account Login</span>
                                 {error ? (
                                     <div className="notification notification--error" role="alert">
                                         <button

@@ -6,7 +6,6 @@ class LoginForm extends Component {
     constructor() {
         super();
         this.state = {
-            redirectTo: false,
             username: null,
             password: null,
             loader: false,
@@ -40,8 +39,7 @@ class LoginForm extends Component {
     }
 
     render() {
-        const { redirectTo, loader, error } = this.state;
-        console.log(redirectTo);
+        const { loader, error } = this.state;
         return (
             <Login
                 login={this.login}

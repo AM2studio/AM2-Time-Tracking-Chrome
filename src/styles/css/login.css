@@ -1,8 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:regular,bold');
-
-.p-b-34 {
-    padding-bottom: 34px;
-}
 .p-b-239 {
     padding-bottom: 20px;
 }
@@ -67,7 +62,7 @@
 .wrap-login100 .logo {
     margin: auto;
     text-align: center;
-    padding-bottom: 80px;
+    padding: 30px 0 30px 0;
 }
 
 /*==================================================================
@@ -95,8 +90,8 @@
     padding: 103px 65px 40px 65px;
 }
 .login100-form-title {
-    font-family: Montserrat;
-    font-size: 18px;
+    font-family: Roboto;
+    font-size: 16px;
     color: #555555;
     line-height: 1.2;
     text-transform: uppercase;
@@ -125,19 +120,8 @@
     border-left: none;
 }
 
-.input100 {
-    display: block;
-    width: 100%;
-    background: #f2f2f2;
-    font-family: Montserrat;
-    font-size: 18px;
-    color: #666666;
-    line-height: 1.2;
-    padding: 0 25px;
-}
-
 input.input100 {
-    height: 55px;
+    height: 46px;
 }
 
 /*---------------------------------------------*/
@@ -205,8 +189,6 @@ input.input100 {
     border-radius: 3px;
     background: #00ad5f;
     box-shadow: none;
-
-    font-family: Montserrat-Bold;
     font-size: 14px;
     color: #fff;
     line-height: 1.2;
@@ -223,9 +205,8 @@ input.input100 {
     display: block;
     width: 100%;
     background: #f2f2f2;
-    font-family: Montserrat;
-    font-size: 18px;
-    color: #666666;
+    font-size: 16px;
+    color: #222;
     line-height: 1.2;
     padding: 0 25px;
 }
@@ -259,9 +240,6 @@ input.input100 {
     color: #fff !important;
 }
 
-input.input100 {
-    height: 55px;
-}
 .login100-form-btn:hover {
     background: #333333;
 }
@@ -306,7 +284,4 @@ input.input100 {
     .rs2-wrap-input100 {
         border-left: 1px solid #e6e6e6;
     }
-}
-.login-animation {
-    min-height: 474px;
 }

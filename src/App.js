@@ -15,7 +15,6 @@ class App extends Component {
     componentWillMount() {
         const auth = new WP_AUTH();
         auth.isAuthenticated().then(response => {
-            console.log(response);
             if (response === true) {
                 this.setState({ login: true });
             }
