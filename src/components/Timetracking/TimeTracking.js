@@ -196,19 +196,11 @@ class AddTime extends Component {
             <div className="widget">
                 <header className="section__header">
                     <h4 className="section__title">AM2 Time Tracking</h4>
+                    <p className="section__subtitle">You tracked 2h and 30min today</p>
                 </header>
                 <div className="section__content">
                     <div className="widget">
                         <form className="form">
-                            {status ? (
-                                <Notification
-                                    text={msgText}
-                                    type={status}
-                                    close={this.closeNotification}
-                                />
-                            ) : (
-                                ''
-                            )}
                             <div className="form__row">
                                 {inputs.map(field => (
                                     <field.type
@@ -225,6 +217,15 @@ class AddTime extends Component {
                                         inputChangeEvent={this.inputChangeEvent}
                                     />
                                 ))}
+                                {status ? (
+                                    <Notification
+                                        text={msgText}
+                                        type={status}
+                                        close={this.closeNotification}
+                                    />
+                                ) : (
+                                    ''
+                                )}
                                 <div className="column twelve">
                                     <button
                                         type="button"

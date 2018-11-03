@@ -478,6 +478,11 @@ input[type='submit'] {
     text-transform: uppercase;
     font-weight: 600;
 }
+.section__subtitle {
+    text-align: center;
+    color: #fff;
+    margin-top: 10px;
+}
 label {
     color: #9e9e9e;
 }

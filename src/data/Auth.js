@@ -7,7 +7,6 @@ class WP_AUTH {
         this.validateUrl = 'http://oldcrm.am2studio.com/wp-json/jwt-auth/v1/token/validate';
         this.tokenKey = 'crmTokenKey';
         this.userName = 'crmUserName';
-        this.permissions = 'permissions';
     }
 
     getSessionToken() {
