@@ -527,3 +527,6 @@ select {
     font-weight: bold !important;
     text-transform: uppercase;
 }
+.logo {
+    max-width: 250px;
+}
