@@ -19,7 +19,7 @@ class AddTime extends Component {
             billable_hours: '01:00',
             project: '',
             projects: [],
-            job_type: { id: '2', title: 'Dev' },
+            job_type: '2',
             asana_url: '',
             comment: '',
             msgText: '',
@@ -81,7 +81,8 @@ class AddTime extends Component {
         api.setPost('time-entry', '', this.state);
         api.set().then(result => {
             if (result.success === true) {
-                this.setState(this.initialState);
+                const { projects, ...rest } = this.initialState;
+                this.setState(rest);
                 this.setState(() => ({
                     status: 'success',
                     msgText: 'Entry Added!'
