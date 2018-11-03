@@ -30,6 +30,26 @@ class WP_API {
         });
     }
 
+    getTime() {
+        return new Promise((resolve, reject) => {
+            chrome.storage.local.get('crmTokenKey', items =>
+                axios({
+                    method: 'get',
+                    url: `${this.url}daily_time/`,
+                    headers: {
+                        Authorization: `Bearer ${items.crmTokenKey}`
+                    }
+                })
+                    .then(response => {
+                        resolve(response.data);
+                    })
+                    .catch(error => {
+                        reject(error);
+                    })
+            );
+        });
+    }
+
     setPost(type, id = undefined, dataToUpdate = undefined) {
         this.url = `${this.url}${type}/`;
         if (id) {

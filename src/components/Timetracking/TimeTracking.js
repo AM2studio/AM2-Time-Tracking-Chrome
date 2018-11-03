@@ -24,7 +24,8 @@ class AddTime extends Component {
             comment: '',
             msgText: '',
             status: false,
-            loader: false
+            loader: false,
+            totalTime: 0
         };
     }
 
@@ -32,7 +33,7 @@ class AddTime extends Component {
         this.initialState = this.state;
         // Projects
         chrome.storage.local.get('projects', storage => {
-            if (storage.projects) {
+            if (!storage.projects) {
                 this.setState({ projects: JSON.parse(storage.projects) });
             } else {
                 const api = new WP_API();
@@ -49,6 +50,9 @@ class AddTime extends Component {
                     .catch(error => {
                         console.log(error);
                     });
+                api.getTime().then(result => {
+                    this.setState({ totalTime: result });
+                });
             }
         });
     }
@@ -109,7 +113,8 @@ class AddTime extends Component {
             comment,
             status,
             msgText,
-            projects
+            projects,
+            totalTime
         } = this.state;
 
         const jobType = [
@@ -196,7 +201,7 @@ class AddTime extends Component {
             <div className="widget">
                 <header className="section__header">
                     <h4 className="section__title">AM2 Time Tracking</h4>
-                    <p className="section__subtitle">You tracked 2h and 30min today</p>
+                    <p className="section__subtitle">You tracked {totalTime} today</p>
                 </header>
                 <div className="section__content">
                     <div className="widget">
