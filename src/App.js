@@ -1,28 +1,34 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './styles/css/content.css';
+import LoginContainer from './components/Login/LoginContainer';
+import TimeTracking from './components/Timetracking/TimeTracking';
+import WP_AUTH from './data/Auth';
+
+const auth = new WP_AUTH();
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+    constructor() {
+        super();
+        this.state = {
+            login: false
+        };
+    }
+
+    handleLogin = () => {
+        this.setState({ login: true });
+    };
+    render() {
+        const { login } = this.state;
+        return (
+            <div className="am2-chrome-timetracking-app">
+                {auth.isAuthenticated() || login === true ? (
+                    <TimeTracking />
+                ) : (
+                    <LoginContainer handleLogin={this.handleLogin} />
+                )}
+            </div>
+        );
+    }
 }
 
 export default App;

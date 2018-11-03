@@ -1,0 +1,312 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:regular,bold');
+
+.p-b-34 {
+    padding-bottom: 34px;
+}
+.p-b-239 {
+    padding-bottom: 20px;
+}
+.p-t-27 {
+    padding-top: 27px;
+}
+.m-b-20 {
+    margin-bottom: 20px;
+}
+.m-l-r-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+.m-l-auto {
+    margin-left: auto;
+}
+.m-r-auto {
+    margin-right: auto;
+}
+.text-center {
+    text-align: center;
+}
+.text-left {
+    text-align: left;
+}
+.text-right {
+    text-align: right;
+}
+.text-middle {
+    vertical-align: middle;
+}
+
+/*//////////////////////////////////////////////////////////////////
+[ login ]*/
+
+.limiter {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.container-login100 {
+    width: 100%;
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background: #fff;
+}
+
+.wrap-login100 {
+    width: 100%;
+    background: #fff;
+    overflow: hidden;
+    padding: 0 20px;
+}
+.wrap-login100 .logo {
+    margin: auto;
+    text-align: center;
+    padding-bottom: 80px;
+}
+
+/*==================================================================
+[ login more ]*/
+.login100-more {
+    width: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    z-index: 1;
+}
+
+/*==================================================================
+[ Form ]*/
+
+.login100-form {
+    width: 50%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 103px 65px 40px 65px;
+}
+.login100-form-title {
+    font-family: Montserrat;
+    font-size: 18px;
+    color: #555555;
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+
+    width: 100%;
+    display: block;
+}
+
+/*------------------------------------------------------------------
+[ Input ]*/
+
+.wrap-input100 {
+    width: 100%;
+    position: relative;
+    border: 1px solid #e6e6e6;
+}
+
+.rs1-wrap-input100,
+.rs2-wrap-input100 {
+    width: 50%;
+}
+
+.rs2-wrap-input100 {
+    border-left: none;
+}
+
+.input100 {
+    display: block;
+    width: 100%;
+    background: #f2f2f2;
+    font-family: Montserrat;
+    font-size: 18px;
+    color: #666666;
+    line-height: 1.2;
+    padding: 0 25px;
+}
+
+input.input100 {
+    height: 55px;
+}
+
+/*---------------------------------------------*/
+
+.focus-input100 {
+    position: absolute;
+    display: block;
+    width: calc(100% + 2px);
+    height: calc(100% + 2px);
+    top: -1px;
+    left: -1px;
+    pointer-events: none;
+    border: 1px solid #00ad5f;
+
+    visibility: hidden;
+    opacity: 0;
+
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    transition: all 0.4s;
+
+    -webkit-transform: scaleX(1.1) scaleY(1.3);
+    -moz-transform: scaleX(1.1) scaleY(1.3);
+    -ms-transform: scaleX(1.1) scaleY(1.3);
+    -o-transform: scaleX(1.1) scaleY(1.3);
+    transform: scaleX(1.1) scaleY(1.3);
+}
+
+.input100:focus + .focus-input100 {
+    visibility: visible;
+    opacity: 1;
+
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1);
+}
+
+/*------------------------------------------------------------------
+[ Button ]*/
+.container-login100-form-btn {
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.container-login100 .login100-form-btn {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    width: 100%;
+    height: 50px;
+    border-radius: 3px;
+    background: #00ad5f;
+    box-shadow: none;
+
+    font-family: Montserrat-Bold;
+    font-size: 14px;
+    color: #fff;
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    -webkit-transition: all 0.2s !important;
+    -o-transition: all 0.2s !important;
+    -moz-transition: all 0.2s !important;
+    transition: all 0.2s !important;
+}
+
+.input100 {
+    display: block;
+    width: 100%;
+    background: #f2f2f2;
+    font-family: Montserrat;
+    font-size: 18px;
+    color: #666666;
+    line-height: 1.2;
+    padding: 0 25px;
+}
+.limiter input {
+    outline: none;
+    border: none;
+}
+
+.limiter input::-webkit-input-placeholder {
+    color: #999999;
+}
+.limiter input:-moz-placeholder {
+    color: #999999;
+}
+.limiter input::-moz-placeholder {
+    color: #999999;
+}
+.limiter input:-ms-input-placeholder {
+    color: #999999;
+}
+
+/*---------------------------------------------*/
+.limiter button {
+    outline: none !important;
+    border: none;
+    background: transparent;
+}
+
+.limiter button:hover {
+    cursor: pointer;
+    color: #fff !important;
+}
+
+input.input100 {
+    height: 55px;
+}
+.login100-form-btn:hover {
+    background: #333333;
+}
+
+/*------------------------------------------------------------------
+[ Responsive ]*/
+
+@media (max-width: 992px) {
+    .login100-form {
+        width: 60%;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    .login100-more {
+        width: 40%;
+    }
+}
+
+@media (max-width: 768px) {
+    .login100-form {
+        width: 100%;
+    }
+
+    .login100-more {
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .login100-form {
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 150px;
+    }
+
+    .rs1-wrap-input100,
+    .rs2-wrap-input100 {
+        width: 100%;
+    }
+
+    .rs2-wrap-input100 {
+        border-left: 1px solid #e6e6e6;
+    }
+}
+.login-animation {
+    min-height: 474px;
+}

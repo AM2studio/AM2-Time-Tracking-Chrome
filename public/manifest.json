@@ -1,15 +1,19 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
-  "icons": [
-    {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    }
-  ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+    "name": "AM2 Time Tracking",
+    "version": "1.0",
+    "manifest_version": 2,
+    "browser_action": {},
+    "content_security_policy": "script-src 'self' 'sha256-GgRxrVOKNdB4LrRsVPDSbzvfdV4UqglmviH9GoBJ5jk='; object-src 'self'",
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "css": ["/static/css/app.css"],
+            "js": ["/static/js/0.chunk.js", "/static/js/1.chunk.js", "/static/js/content.js"]
+        }
+    ],
+    "permissions": ["storage"],
+    "background": {
+        "scripts": ["app/background.js"]
+    },
+    "web_accessible_resources": ["/static/css/0.chunk.css", "/static/css/1.chunk.css"]
 }
