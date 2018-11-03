@@ -47,7 +47,6 @@
         "react-dates": "^18.2.0",
         "react-dev-utils": "^6.1.1",
         "react-dom": "^16.6.0",
-        "react-frame-component": "^4.0.2",
         "react-select": "1.2.1",
         "react-times": "^3.1.10",
         "resolve": "1.8.1",
