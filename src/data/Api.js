@@ -10,24 +10,24 @@ class WP_API {
     }
 
     getPosts(type, data = undefined) {
-        chrome.storage.local.get('crmTokenKey', items =>
-            axios({
-                method: 'get',
-                url: `${this.url}${type}/`,
-                headers: {
-                    Authorization: `Bearer ${items.crmTokenKey}`
-                },
-                params: data
-            })
-                .then(response => {
-                    console.log(response);
-                    return response.data;
+        return new Promise((resolve, reject) => {
+            chrome.storage.local.get('crmTokenKey', items =>
+                axios({
+                    method: 'get',
+                    url: `${this.url}${type}/`,
+                    headers: {
+                        Authorization: `Bearer ${items.crmTokenKey}`
+                    },
+                    params: data
                 })
-                .catch(error => {
-                    // handle error
-                    console.log(error);
-                })
-        );
+                    .then(response => {
+                        resolve(response.data.data);
+                    })
+                    .catch(error => {
+                        reject(error);
+                    })
+            );
+        });
     }
 
     setPost(type, id = undefined, dataToUpdate = undefined) {

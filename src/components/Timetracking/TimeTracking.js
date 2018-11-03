@@ -36,15 +36,19 @@ class AddTime extends Component {
                 this.setState({ projects: JSON.parse(storage.projects) });
             } else {
                 const api = new WP_API();
-                api.getPosts('projects').then(result => {
-                    const posts = result.data.map(post => ({
-                        id: post.id,
-                        title: post.title,
-                        company: post.company_name
-                    }));
-                    chrome.storage.local.set({ projects: JSON.stringify(posts) });
-                    this.setState({ projects: posts });
-                });
+                api.getPosts('projects')
+                    .then(result => {
+                        const posts = result.map(post => ({
+                            id: post.id,
+                            title: post.title,
+                            company: post.company_name
+                        }));
+                        chrome.storage.local.set({ projects: JSON.stringify(posts) });
+                        this.setState({ projects: posts });
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
             }
         });
     }
