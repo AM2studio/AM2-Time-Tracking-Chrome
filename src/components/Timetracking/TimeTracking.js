@@ -22,6 +22,8 @@ class AddTime extends Component {
             projects: [],
             job_type: '2',
             asana_url: '',
+            milestone: '',
+            milestones: [],
             comment: '',
             msgText: '',
             status: false,
@@ -76,6 +78,12 @@ class AddTime extends Component {
         this.setState({ [name]: value, status: false });
         if (name === 'hours') {
             this.setState({ billable_hours: value });
+        }
+        if (name === 'project') {
+            const api = new WP_API();
+            api.getMilestones(value).then(response => {
+                this.setState({ milestones: response });
+            });
         }
     };
 
@@ -138,13 +146,15 @@ class AddTime extends Component {
             date,
             hours,
             project,
+            projects,
+            milestone,
+            milestones,
             billable_hours, // eslint-disable-line camelcase
             job_type, // eslint-disable-line camelcase
             asana_url, // eslint-disable-line camelcase
             comment,
             status,
             msgText,
-            projects,
             totalTime,
             timerIsRunning
         } = this.state;
@@ -175,6 +185,16 @@ class AddTime extends Component {
                 list: projects,
                 required: true,
                 value: project,
+                parentClass: 'column twelve'
+            },
+            {
+                type: Select,
+                name: 'milestone',
+                label: 'Milestone',
+                placeholder: 'Select Milestone',
+                list: milestones,
+                required: true,
+                value: milestone,
                 parentClass: 'column twelve'
             },
             {

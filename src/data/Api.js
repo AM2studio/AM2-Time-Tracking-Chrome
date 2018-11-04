@@ -30,6 +30,27 @@ class WP_API {
         });
     }
 
+    getMilestones(id) {
+        return new Promise((resolve, reject) => {
+            chrome.storage.local.get('crmTokenKey', items =>
+                axios({
+                    method: 'get',
+                    url: `${this.url}milestones/`,
+                    headers: {
+                        Authorization: `Bearer ${items.crmTokenKey}`
+                    },
+                    params: { id }
+                })
+                    .then(response => {
+                        resolve(response.data);
+                    })
+                    .catch(error => {
+                        reject(error);
+                    })
+            );
+        });
+    }
+
     getTime() {
         return new Promise((resolve, reject) => {
             chrome.storage.local.get('crmTokenKey', items =>
@@ -70,7 +91,6 @@ class WP_API {
                     data: this.dataToUpdate
                 })
                     .then(response => {
-                        console.log(response.data);
                         resolve(response.data);
                     })
                     .catch(error => {
