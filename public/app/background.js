@@ -1,11 +1,27 @@
 /*eslint-disable*/
-// Called when the user clicks on the browser action
-chrome.browserAction.onClicked.addListener(function(tab) {
-    // Send a message to the active tab
-    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-        var activeTab = tabs[0];
-        chrome.tabs.sendMessage(activeTab.id, {
-            message: 'clicked_browser_action'
+function AM2CRMTimer() {
+    console.log('Hello');
+}
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (request.type === 'startTimer') {
+        chrome.storage.local.set({ AM2CRMStartTime: new Date().toJSON() });
+    }
+    if (request.type === 'getTimer') {
+        chrome.storage.local.get('AM2CRMStartTime', items => {
+            if (items.AM2CRMStartTime) {
+                sendResponse(new Date() - new Date(items.AM2CRMStartTime));
+            }
         });
-    });
+        return true;
+    }
+    if (request.type === 'stopTimer') {
+        chrome.storage.local.get('AM2CRMStartTime', items => {
+            if (items.AM2CRMStartTime) {
+                sendResponse(new Date() - new Date(items.AM2CRMStartTime));
+                chrome.storage.local.remove('AM2CRMStartTime');
+            }
+        });
+        return true;
+    }
+    return false;
 });

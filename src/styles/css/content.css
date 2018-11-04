@@ -540,7 +540,35 @@ select {
     color: #fff;
     font-weight: bold !important;
     text-transform: uppercase;
+    outline: none;
 }
 .logo {
     max-width: 250px;
+}
+.timer__time {
+    margin-right: 45px;
+    -webkit-animation: flash linear 1s infinite;
+    animation: flash linear 1s infinite;
+}
+@-webkit-keyframes flash {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@keyframes flash {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }

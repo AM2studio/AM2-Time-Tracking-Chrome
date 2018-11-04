@@ -10,6 +10,9 @@
         "48": "logo48.png",
         "128": "logo128.png"
     },
+    "background": {
+        "scripts": ["app/background.js"]
+    },
     "permissions": ["storage", "http://oldcrm.am2studio.com/"],
     "content_security_policy": "script-src 'self' 'sha256-GgRxrVOKNdB4LrRsVPDSbzvfdV4UqglmviH9GoBJ5jk='; object-src 'self'"
 }

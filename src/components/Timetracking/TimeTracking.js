@@ -8,6 +8,7 @@ import Select from './../Form/Select';
 import Textarea from './../Form/Textarea';
 import DatePicker from './../Form/DatePicker';
 import Notification from './../Form/Notification';
+import Timer from './Timer';
 
 class AddTime extends Component {
     constructor(props) {
@@ -25,6 +26,7 @@ class AddTime extends Component {
             msgText: '',
             status: false,
             loader: false,
+            timerIsRunning: false,
             totalTime: 0
         };
     }
@@ -32,6 +34,12 @@ class AddTime extends Component {
     componentWillMount() {
         this.initialState = this.state;
         // Projects
+        this.getProjects();
+        // Timer
+        this.getTimer();
+    }
+
+    getProjects = () => {
         const api = new WP_API();
         api.getPosts('projects')
             .then(result => {
@@ -49,7 +57,19 @@ class AddTime extends Component {
         api.getTime().then(result => {
             this.setState({ totalTime: result });
         });
-    }
+    };
+
+    getTimer = () => {
+        chrome.runtime.sendMessage({ type: 'getTimer' }, response => {
+            if (response) {
+                const hours = `0${new Date(response).getHours() - 1}`.slice(-2);
+                const minutes = `0${new Date(response).getMinutes()}`.slice(-2);
+                this.setState({
+                    timerIsRunning: `${hours}:${minutes}`
+                });
+            }
+        });
+    };
 
     inputChangeEvent = e => {
         const { name, value } = e.target;
@@ -96,6 +116,23 @@ class AddTime extends Component {
         });
     };
 
+    startTimer = () => {
+        chrome.runtime.sendMessage({ type: 'startTimer' });
+        this.setState({ timerIsRunning: '00:00' });
+    };
+
+    stopTimer = () => {
+        chrome.runtime.sendMessage({ type: 'stopTimer' }, response => {
+            const hours = `0${new Date(response).getHours() - 1}`.slice(-2);
+            const minutes = `0${new Date(response).getMinutes()}`.slice(-2);
+            this.setState({
+                hours: `${hours}:${minutes}`,
+                billable_hours: `${hours}:${minutes}`,
+                timerIsRunning: false
+            });
+        });
+    };
+
     render() {
         const {
             date,
@@ -108,7 +145,8 @@ class AddTime extends Component {
             status,
             msgText,
             projects,
-            totalTime
+            totalTime,
+            timerIsRunning
         } = this.state;
 
         const jobType = [
@@ -196,6 +234,11 @@ class AddTime extends Component {
                 <header className="section__header">
                     <h4 className="section__title">AM2 Time Tracking</h4>
                     <p className="section__subtitle">You tracked {totalTime} today</p>
+                    <Timer
+                        timerIsRunning={timerIsRunning}
+                        startTimer={this.startTimer}
+                        stopTimer={this.stopTimer}
+                    />
                 </header>
                 <div className="section__content">
                     <div className="widget">
