@@ -18,6 +18,7 @@ class AddTime extends Component {
             date: moment().format('DD/MM/YYYY'),
             hours: '01:00',
             billable_hours: '01:00',
+            is_billable: 1,
             project: '',
             projects: [],
             job_type: '2',
@@ -82,7 +83,7 @@ class AddTime extends Component {
         if (name === 'project') {
             const api = new WP_API();
             api.getMilestones(value).then(response => {
-                this.setState({ milestones: response });
+                this.setState({ milestones: response, milestone: response[0].id });
             });
         }
     };
@@ -149,7 +150,6 @@ class AddTime extends Component {
             projects,
             milestone,
             milestones,
-            billable_hours, // eslint-disable-line camelcase
             job_type, // eslint-disable-line camelcase
             asana_url, // eslint-disable-line camelcase
             comment,
@@ -213,14 +213,14 @@ class AddTime extends Component {
                 value: hours,
                 parentClass: 'column twelve'
             },
-            {
-                type: Time,
-                name: 'billable_hours',
-                label: 'Billable Hours',
-                required: true,
-                value: billable_hours,
-                parentClass: 'column twelve'
-            },
+            // {
+            //     type: Time,
+            //     name: 'billable_hours',
+            //     label: 'Billable Hours',
+            //     required: true,
+            //     value: billable_hours,
+            //     parentClass: 'column twelve'
+            // },
             {
                 type: Select,
                 name: 'job_type',
