@@ -3,19 +3,28 @@ import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 
 class AM2Select extends Component {
-    componentWillMount() {
+    constructor(props) {
+        super(props);
         const { value, list } = this.props;
 
         // So, this package requires selected value to be an object
         // Our select list is using id property ( this was prior to installing this package), so we first need to filter object via id = value
         // Then need to convert it to expected object
-        const result = list.filter(obj => obj.id.toString() === value);
+        const result = list.filter(obj => obj.id.toString() === value.toString());
         let filteredResults;
         if (result !== undefined) {
             filteredResults = result.map(o => ({ value: o.id, label: o.title }));
+            this.state = { selectedOption: filteredResults[0] };
+        } else {
+            this.state = { selectedOption: '' };
         }
+    }
 
-        this.setState({ selectedOption: filteredResults[0] });
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (prevState && nextProps.value !== prevState.selectedOption) {
+            return { selectedOption: nextProps.value };
+        }
+        return null;
     }
 
     handleChange = selectedOption => {
