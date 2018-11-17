@@ -15,7 +15,7 @@ class AddTime extends Component {
         super(props);
 
         this.state = {
-            date: moment().format('DD/MM/YYYY'),
+            date: moment().format('DD/MM/YYYY'), // Date here needs to be this format, while DatePicker has mooment object state
             hours: '01:00',
             billable_hours: '01:00',
             is_billable: 1,
@@ -36,11 +36,23 @@ class AddTime extends Component {
 
     componentWillMount() {
         this.initialState = this.state;
+        // Populate inputs
+        this.getSavedData();
         // Projects
         this.getProjects();
         // Timer
         this.getTimer();
     }
+
+    getSavedData = () => {
+        Object.keys(this.state).map(key =>
+            WP_API.getSavedState(key).then(value => {
+                if (value) {
+                    this.setState({ ...value });
+                }
+            })
+        );
+    };
 
     getProjects = () => {
         const api = new WP_API();
@@ -76,7 +88,10 @@ class AddTime extends Component {
 
     inputChangeEvent = e => {
         const { name, value } = e.target;
-        this.setState({ [name]: value, status: false });
+        this.setState(
+            () => ({ [name]: value, status: false }),
+            name !== 'projects' ? chrome.storage.local.set({ [name]: value }) : ''
+        );
         if (name === 'hours') {
             this.setState({ billable_hours: value });
         }
@@ -178,6 +193,14 @@ class AddTime extends Component {
 
         const inputs = [
             {
+                type: Time,
+                name: 'hours',
+                label: 'Hours of Work',
+                required: true,
+                value: hours,
+                parentClass: 'column twelve'
+            },
+            {
                 type: Select,
                 name: 'project',
                 label: 'Project',
@@ -203,14 +226,6 @@ class AddTime extends Component {
                 label: 'Date',
                 value: date,
                 required: true,
-                parentClass: 'column twelve'
-            },
-            {
-                type: Time,
-                name: 'hours',
-                label: 'Hours of Work',
-                required: true,
-                value: hours,
                 parentClass: 'column twelve'
             },
             // {
