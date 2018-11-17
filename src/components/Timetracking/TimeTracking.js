@@ -15,7 +15,7 @@ class AddTime extends Component {
         super(props);
 
         this.state = {
-            date: moment().format('DD/MM/YYYY'),
+            date: moment().format('DD/MM/YYYY'), // Date here needs to be this format, while DatePicker has mooment object state
             hours: '01:00',
             billable_hours: '01:00',
             is_billable: 1,
@@ -36,11 +36,33 @@ class AddTime extends Component {
 
     componentWillMount() {
         this.initialState = this.state;
+        // Populate inputs
+        this.getSavedData();
         // Projects
         this.getProjects();
         // Timer
         this.getTimer();
     }
+
+    getMilestones = project => {
+        const api = new WP_API();
+        api.getMilestones(project).then(response => {
+            this.setState({ milestones: response });
+        });
+    };
+
+    getSavedData = () => {
+        Object.keys(this.state).map(key =>
+            WP_API.getSavedState(key).then(value => {
+                if (value) {
+                    this.setState({ ...value });
+                }
+                if (key === 'project') {
+                    this.getMilestones(value[key]);
+                }
+            })
+        );
+    };
 
     getProjects = () => {
         const api = new WP_API();
@@ -76,15 +98,15 @@ class AddTime extends Component {
 
     inputChangeEvent = e => {
         const { name, value } = e.target;
-        this.setState({ [name]: value, status: false });
+        this.setState(
+            () => ({ [name]: value, status: false }),
+            name !== 'projects' ? chrome.storage.local.set({ [name]: value }) : ''
+        );
         if (name === 'hours') {
             this.setState({ billable_hours: value });
         }
         if (name === 'project') {
-            const api = new WP_API();
-            api.getMilestones(value).then(response => {
-                this.setState({ milestones: response, milestone: response[0].id });
-            });
+            this.getMilestones(value);
         }
     };
 
@@ -106,23 +128,31 @@ class AddTime extends Component {
         this.setState(() => ({ loader: true }));
         const api = new WP_API();
         api.setPost('time-entry', '', this.state);
-        api.set().then(result => {
-            if (result.success === true) {
-                const { projects, ...rest } = this.initialState;
-                this.setState(rest);
-                this.setState(() => ({
-                    status: 'success',
-                    msgText: 'Entry Added!'
-                }));
-            } else {
+        api.set()
+            .then(result => {
+                if (result.success === true) {
+                    Object.keys(this.state).map(key => chrome.storage.local.remove(key));
+                    const { projects, ...rest } = this.initialState;
+                    this.setState(rest);
+                    this.setState(() => ({
+                        status: 'success',
+                        msgText: 'Entry Added!'
+                    }));
+                } else {
+                    this.setState(() => ({
+                        status: 'error',
+                        msgText: 'Upss.. something went wrong! Check with Goran.',
+                        loader: false
+                    }));
+                }
+            })
+            .catch(() => {
                 this.setState(() => ({
                     status: 'error',
                     msgText: 'Upss.. something went wrong! Check with Goran.',
                     loader: false
                 }));
-                console.log('Something went wrong!');
-            }
-        });
+            });
     };
 
     startTimer = () => {
@@ -178,6 +208,14 @@ class AddTime extends Component {
 
         const inputs = [
             {
+                type: Time,
+                name: 'hours',
+                label: 'Hours of Work',
+                required: true,
+                value: hours,
+                parentClass: 'column twelve'
+            },
+            {
                 type: Select,
                 name: 'project',
                 label: 'Project',
@@ -203,14 +241,6 @@ class AddTime extends Component {
                 label: 'Date',
                 value: date,
                 required: true,
-                parentClass: 'column twelve'
-            },
-            {
-                type: Time,
-                name: 'hours',
-                label: 'Hours of Work',
-                required: true,
-                value: hours,
                 parentClass: 'column twelve'
             },
             // {

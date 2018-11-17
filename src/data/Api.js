@@ -71,6 +71,19 @@ class WP_API {
         });
     }
 
+    static getSavedState(key) {
+        return new Promise(resolve => {
+            chrome.storage.local.get(key, items => {
+                if (items[key] && key !== 'projects') {
+                    // Bug: its always saving projects as well! line 94 Timetracking.js
+                    resolve({ [key]: items[key] });
+                } else {
+                    resolve(false);
+                }
+            });
+        });
+    }
+
     setPost(type, id = undefined, dataToUpdate = undefined) {
         this.url = `${this.url}${type}/`;
         if (id) {
