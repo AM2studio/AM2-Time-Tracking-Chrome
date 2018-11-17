@@ -44,11 +44,21 @@ class AddTime extends Component {
         this.getTimer();
     }
 
+    getMilestones = project => {
+        const api = new WP_API();
+        api.getMilestones(project).then(response => {
+            this.setState({ milestones: response });
+        });
+    };
+
     getSavedData = () => {
         Object.keys(this.state).map(key =>
             WP_API.getSavedState(key).then(value => {
                 if (value) {
                     this.setState({ ...value });
+                }
+                if (key === 'project') {
+                    this.getMilestones(value[key]);
                 }
             })
         );
@@ -96,10 +106,7 @@ class AddTime extends Component {
             this.setState({ billable_hours: value });
         }
         if (name === 'project') {
-            const api = new WP_API();
-            api.getMilestones(value).then(response => {
-                this.setState({ milestones: response, milestone: response[0].id });
-            });
+            this.getMilestones(value);
         }
     };
 
@@ -121,23 +128,31 @@ class AddTime extends Component {
         this.setState(() => ({ loader: true }));
         const api = new WP_API();
         api.setPost('time-entry', '', this.state);
-        api.set().then(result => {
-            if (result.success === true) {
-                const { projects, ...rest } = this.initialState;
-                this.setState(rest);
-                this.setState(() => ({
-                    status: 'success',
-                    msgText: 'Entry Added!'
-                }));
-            } else {
+        api.set()
+            .then(result => {
+                if (result.success === true) {
+                    Object.keys(this.state).map(key => chrome.storage.local.remove(key));
+                    const { projects, ...rest } = this.initialState;
+                    this.setState(rest);
+                    this.setState(() => ({
+                        status: 'success',
+                        msgText: 'Entry Added!'
+                    }));
+                } else {
+                    this.setState(() => ({
+                        status: 'error',
+                        msgText: 'Upss.. something went wrong! Check with Goran.',
+                        loader: false
+                    }));
+                }
+            })
+            .catch(() => {
                 this.setState(() => ({
                     status: 'error',
                     msgText: 'Upss.. something went wrong! Check with Goran.',
                     loader: false
                 }));
-                console.log('Something went wrong!');
-            }
-        });
+            });
     };
 
     startTimer = () => {
