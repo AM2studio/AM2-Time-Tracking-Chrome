@@ -1,7 +1,4 @@
 /*eslint-disable*/
-function AM2CRMTimer() {
-    console.log('Hello');
-}
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.type === 'startTimer') {
         chrome.storage.local.set({ AM2CRMStartTime: new Date().toJSON() });
