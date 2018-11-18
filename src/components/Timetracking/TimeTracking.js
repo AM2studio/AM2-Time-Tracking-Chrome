@@ -106,7 +106,10 @@ class AddTime extends Component {
             this.setState({ billable_hours: value });
         }
         if (name === 'project') {
-            this.getMilestones(value);
+            const api = new WP_API();
+            api.getMilestones(value).then(response => {
+                this.setState({ milestones: response, milestone: response[0].id });
+            });
         }
     };
 
@@ -115,9 +118,9 @@ class AddTime extends Component {
     };
 
     addUserEntry = () => {
-        const { project: projectId, comment } = this.state;
+        const { project: projectId, comment, milestone } = this.state;
         // Validation
-        if (projectId === '' || comment === '') {
+        if (projectId === '' || comment === '' || milestone === '') {
             this.setState(() => ({
                 status: 'error',
                 msgText: 'Required fields are missing.'
