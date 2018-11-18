@@ -31,9 +31,7 @@ observeDOM(document, function(m) {
                 );
                 var link = document.getElementsByClassName('am2-time-tracking--asana')[0];
                 if (link) {
-                    link.addEventListener('click', function() {
-                        AM2AsanaAddTime();
-                    });
+                    link.addEventListener('click', () => AM2AsanaAddTime());
                 }
             }
         }
