@@ -39,7 +39,6 @@ class WP_AUTH {
                     })
             )
             .catch(rej => {
-                // here when you reject the promise
                 console.log(rej);
                 return false;
             });
@@ -55,10 +54,8 @@ class WP_AUTH {
                 chrome.storage.local.set({ [this.tokenKey]: response.data.token });
                 chrome.storage.local.set({ [this.userName]: response.data.user_display_name });
                 return response.status;
-                // Set projects maybe
             })
             .catch(error => {
-                // handle error
                 console.log(error);
                 return error;
             });
