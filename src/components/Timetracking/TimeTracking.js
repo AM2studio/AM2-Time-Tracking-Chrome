@@ -25,6 +25,8 @@ class AddTime extends Component {
             asana_url: '',
             milestone: '',
             milestones: [],
+            feature: '',
+            features: [],
             comment: '',
             msgText: '',
             status: false,
@@ -47,7 +49,10 @@ class AddTime extends Component {
     getMilestones = project => {
         const api = new WP_API();
         api.getMilestones(project).then(response => {
-            this.setState({ milestones: response });
+            this.setState({
+                milestones: response.milestones,
+                features: response.features
+            });
         });
     };
 
@@ -108,7 +113,12 @@ class AddTime extends Component {
         if (name === 'project') {
             const api = new WP_API();
             api.getMilestones(value).then(response => {
-                this.setState({ milestones: response, milestone: response[0].id });
+                this.setState({
+                    milestones: response.milestones,
+                    milestone: response.milestones[0] && response.milestones[0].id,
+                    features: response.features,
+                    feature: response.features[0] && response.features[0].id
+                });
             });
         }
     };
@@ -183,6 +193,8 @@ class AddTime extends Component {
             projects,
             milestone,
             milestones,
+            feature,
+            features,
             job_type, // eslint-disable-line camelcase
             asana_url, // eslint-disable-line camelcase
             comment,
@@ -236,6 +248,16 @@ class AddTime extends Component {
                 list: milestones,
                 required: true,
                 value: milestone,
+                parentClass: 'column twelve'
+            },
+            {
+                type: Select,
+                name: 'feature',
+                label: 'Feature',
+                placeholder: 'Select feature',
+                list: features,
+                required: true,
+                value: feature,
                 parentClass: 'column twelve'
             },
             {

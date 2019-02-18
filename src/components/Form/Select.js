@@ -46,6 +46,12 @@ class AM2Select extends Component {
         let { required } = this.props;
         const { selectedOption } = this.state;
         let formatedList = list;
+
+        // No list? Dont render Select element.
+        if (!list) {
+            return '';
+        }
+
         // Are we getting title and id from WordPress, if so, format it to label/value:
         if (list.length > 0 && !Object.prototype.hasOwnProperty.call(list[0], 'label')) {
             formatedList = list.map(listItem => ({
