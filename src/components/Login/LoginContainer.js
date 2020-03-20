@@ -6,7 +6,7 @@ class LoginForm extends Component {
     constructor() {
         super();
         this.state = {
-            username: null,
+            email: null,
             password: null,
             loader: false,
             error: false
@@ -19,9 +19,9 @@ class LoginForm extends Component {
     login() {
         this.setState(() => ({ loader: true }));
         const auth = new WP_AUTH();
-        const { username, password } = this.state;
+        const { email, password } = this.state;
         const { handleLogin } = this.props;
-        auth.authenticate(username, password).then(result => {
+        auth.authenticate(email, password).then(result => {
             if (result === 200) {
                 handleLogin();
             } else {

@@ -3,10 +3,10 @@ import axios from 'axios';
 
 class WP_AUTH {
     constructor() {
-        this.url = 'https://oldcrm.am2studio.com/wp-json/jwt-auth/v1/token';
-        this.validateUrl = 'https://oldcrm.am2studio.com/wp-json/jwt-auth/v1/token/validate';
+        this.url = 'https://dev-api-myzone-erp.myzone.tech/login';
+        this.validateUrl = 'https://dev-api-myzone-erp.myzone.tech/api/me';
         this.tokenKey = 'crmTokenKey';
-        this.userName = 'crmUserName';
+        this.Email = 'crmEmail';
     }
 
     getSessionToken() {
@@ -25,7 +25,7 @@ class WP_AUTH {
         this.getSessionToken()
             .then(token =>
                 axios({
-                    method: 'post',
+                    method: 'get',
                     url: this.validateUrl,
                     headers: {
                         'Content-Type': 'application/json',
@@ -44,15 +44,15 @@ class WP_AUTH {
             });
 
     /* Login */
-    authenticate(username, password) {
+    authenticate(email, password) {
         return axios
             .post(this.url, {
-                username,
+                email,
                 password
             })
             .then(response => {
                 chrome.storage.local.set({ [this.tokenKey]: response.data.token });
-                chrome.storage.local.set({ [this.userName]: response.data.user_display_name });
+                chrome.storage.local.set({ [this.Email]: response.data.user_display_name });
                 return response.status;
             })
             .catch(error => {

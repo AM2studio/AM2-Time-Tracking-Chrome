@@ -29,7 +29,7 @@ const Login = props => {
                                     <span aria-hidden="true">×</span>
                                 </button>
                                 <p>
-                                    <strong>Error:</strong> Wrong username or password.
+                                    <strong>Error:</strong> Wrong email or password.
                                 </p>
                             </div>
                         ) : (
@@ -42,10 +42,10 @@ const Login = props => {
                             <input
                                 className="input100"
                                 type="text"
-                                name="username"
-                                id="username"
+                                name="email"
+                                id="email"
                                 onChange={handleChange}
-                                placeholder="Username"
+                                placeholder="Email"
                             />
                             <span className="focus-input100" />
                         </div>
