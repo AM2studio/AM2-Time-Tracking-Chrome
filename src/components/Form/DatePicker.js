@@ -11,11 +11,11 @@ export default class DatePicker extends Component {
         let { value } = this.props;
 
         if (typeof value === 'undefined' || value === '') {
-            value = moment().format('DD/MM/YYYY');
+            value = moment().format('MM/DD/YYYY');
         }
 
         this.state = {
-            date: moment(value, 'DD/MM/YYYY'),
+            date: moment(value, 'MM/DD/YYYY'),
             focused: null
         };
     }
@@ -23,7 +23,7 @@ export default class DatePicker extends Component {
     handleDateChange = date => {
         const { name, inputChangeEvent } = this.props;
         this.state.date = date;
-        const e = { target: { name, value: date.format('DD/MM/YYYY') } };
+        const e = { target: { name, value: date.format('MM/DD/YYYY') } };
         inputChangeEvent(e);
     };
 

@@ -15,7 +15,7 @@ class AddTime extends Component {
         super(props);
 
         this.state = {
-            date: moment().format('DD/MM/YYYY'), // Date here needs to be this format, while DatePicker has mooment object state
+            date: moment().format('MM/DD/YYYY'), // Date here needs to be this format, while DatePicker has mooment object state
             hours: '01:00',
             billable_hours: '01:00',
             is_billable: 1,
@@ -25,10 +25,15 @@ class AddTime extends Component {
             asana_url: '',
             milestone: '',
             milestones: [],
+            workType: '',
+            workTypes: [],
             feature: '',
             features: [],
+            contract: '',
+            contracts: [],
             comment: '',
             msgText: '',
+            userId: '',
             status: false,
             loader: false,
             timerIsRunning: false,
@@ -39,19 +44,65 @@ class AddTime extends Component {
     componentWillMount() {
         this.initialState = this.state;
         // Populate inputs
-        this.getSavedData();
+        //  this.getSavedData();
+        // Users
+        this.getUserData();
         // Projects
         this.getProjects();
         // Timer
         this.getTimer();
+        // Wtype
+        this.getWorkTypes();
     }
 
-    getMilestones = project => {
+    getUserData = () => {
         const api = new WP_API();
-        api.getMilestones(project).then(response => {
+        api.getUserData().then(response => {
             this.setState({
-                milestones: response.milestones,
-                features: response.features
+                userId: response
+            });
+        });
+    };
+
+    getWorkTypes = () => {
+        const api = new WP_API();
+        api.getWorkTypes().then(response => {
+            console.log(response);
+            this.setState({
+                workTypes: response,
+                workType: response[0] && response[0].id
+            });
+        });
+    };
+
+    getMilestones = projectId => {
+        const api = new WP_API();
+        api.getMilestones(projectId).then(response => {
+            console.log(response);
+            this.setState({
+                milestones: response,
+                milestone: response[0] && response[0].id
+            });
+        });
+    };
+
+    getFeatures = projectId => {
+        const api = new WP_API();
+        api.getFeatures(projectId).then(response => {
+            this.setState({
+                features: response,
+                feature: response[0] && response[0].id
+            });
+        });
+    };
+
+    getContracts = projectId => {
+        const api = new WP_API();
+        api.getContracts(projectId).then(response => {
+            console.log(response);
+            this.setState({
+                contracts: response,
+                contract: response[0] && response[0].id
             });
         });
     };
@@ -64,6 +115,8 @@ class AddTime extends Component {
                 }
                 if (key === 'project') {
                     this.getMilestones(value[key]);
+                    this.getContracts(value[key]);
+                    this.getFeatures(value[key]);
                 }
             })
         );
@@ -71,15 +124,10 @@ class AddTime extends Component {
 
     getProjects = () => {
         const api = new WP_API();
-        api.getPosts('projects')
-            .then(result => {
-                const posts = result.map(post => ({
-                    id: post.id,
-                    title: post.title,
-                    company: post.company_name
-                }));
-                chrome.storage.local.set({ projects: JSON.stringify(posts) });
-                this.setState({ projects: posts });
+        api.getProjects('projects?pagination=false')
+            .then(response => {
+                chrome.storage.local.set({ projects: JSON.stringify(response) });
+                this.setState({ projects: response });
             })
             .catch(error => {
                 console.log(error);
@@ -90,15 +138,16 @@ class AddTime extends Component {
     };
 
     getTimer = () => {
-        chrome.runtime.sendMessage({ type: 'getTimer' }, response => {
-            if (response) {
-                const hours = `0${new Date(response).getHours() - 1}`.slice(-2);
-                const minutes = `0${new Date(response).getMinutes()}`.slice(-2);
-                this.setState({
-                    timerIsRunning: `${hours}:${minutes}`
-                });
-            }
-        });
+        //  chrome.runtime.sendMessage({ type: 'getTimer' }, response => {
+        const response = null;
+        if (response) {
+            const hours = `0${new Date(response).getHours() - 1}`.slice(-2);
+            const minutes = `0${new Date(response).getMinutes()}`.slice(-2);
+            this.setState({
+                timerIsRunning: `${hours}:${minutes}`
+            });
+        }
+        //   });
     };
 
     inputChangeEvent = e => {
@@ -111,15 +160,9 @@ class AddTime extends Component {
             this.setState({ billable_hours: value });
         }
         if (name === 'project') {
-            const api = new WP_API();
-            api.getMilestones(value).then(response => {
-                this.setState({
-                    milestones: response.milestones,
-                    milestone: response.milestones[0] && response.milestones[0].id,
-                    features: response.features,
-                    feature: response.features[0] && response.features[0].id
-                });
-            });
+            this.getMilestones(value);
+            this.getFeatures(value);
+            this.getContracts(value);
         }
     };
 
@@ -128,22 +171,49 @@ class AddTime extends Component {
     };
 
     addUserEntry = () => {
-        const { project: projectId, comment, milestone } = this.state;
+        const {
+            project,
+            userId,
+            contract,
+            comment,
+            milestone,
+            feature,
+            workType,
+            date,
+            asana_url,
+            hours
+        } = this.state;
+
         // Validation
-        if (projectId === '' || comment === '' || milestone === '') {
+        if (project === '' || comment === '' || milestone === '') {
             this.setState(() => ({
                 status: 'error',
                 msgText: 'Required fields are missing.'
             }));
             return;
         }
+
         // Proceed
         this.setState(() => ({ loader: true }));
         const api = new WP_API();
-        api.setPost('time-entry', '', this.state);
-        api.set()
+        const data = {
+            created_by: userId,
+            project,
+            project_contract: contract,
+            milestone,
+            feature,
+            work_type: workType,
+            date: date,
+            time_spent: hours.split(':').reduce((acc, time) => 3600 * acc + +time * 60),
+            time_spent_billable: hours.split(':').reduce((acc, time) => 3600 * acc + +time * 60),
+            comment: comment,
+            task_url: asana_url
+        };
+
+        api.set(data)
             .then(result => {
-                if (result.success === true) {
+                console.log(result);
+                if (result.code === 'timelog.itemSuccessfulyCreated') {
                     Object.keys(this.state).map(key => chrome.storage.local.remove(key));
                     const { projects, ...rest } = this.initialState;
                     this.setState(rest);
@@ -193,9 +263,12 @@ class AddTime extends Component {
             projects,
             milestone,
             milestones,
+            contracts,
+            contract,
             feature,
             features,
-            job_type, // eslint-disable-line camelcase
+            workTypes,
+            workType, // eslint-disable-line camelcase
             asana_url, // eslint-disable-line camelcase
             comment,
             status,
@@ -203,23 +276,6 @@ class AddTime extends Component {
             totalTime,
             timerIsRunning
         } = this.state;
-
-        const jobType = [
-            { id: '2', title: 'Dev' },
-            { id: '0', title: 'PM' },
-            { id: '1', title: 'Web Design' },
-            { id: '13', title: 'Graphic Design' },
-            { id: '3', title: 'Personal development' },
-            { id: '4', title: 'Administration' },
-            { id: '5', title: 'Meeting (client)' },
-            { id: '6', title: 'Meeting (internal)' },
-            { id: '7', title: 'Team Management' },
-            { id: '8', title: 'QA' },
-            { id: '9', title: 'Support' },
-            { id: '10', title: 'Preparing quote' },
-            { id: '11', title: 'Content Transfer' },
-            { id: '12', title: 'Junior Training' }
-        ];
 
         const inputs = [
             {
@@ -238,6 +294,16 @@ class AddTime extends Component {
                 list: projects,
                 required: true,
                 value: project,
+                parentClass: 'column twelve'
+            },
+            {
+                type: Select,
+                name: 'contract',
+                label: 'Contract',
+                placeholder: 'Select contract',
+                list: contracts,
+                required: true,
+                value: contract,
                 parentClass: 'column twelve'
             },
             {
@@ -282,8 +348,8 @@ class AddTime extends Component {
                 label: 'Job Type',
                 placeholder: 'Select Work Type',
                 required: true,
-                value: job_type,
-                list: jobType,
+                value: workType,
+                list: workTypes,
                 parentClass: 'column twelve'
             },
             {
