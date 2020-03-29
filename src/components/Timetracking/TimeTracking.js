@@ -21,7 +21,6 @@ class AddTime extends Component {
             is_billable: 1,
             project: '',
             projects: [],
-            job_type: '2',
             asana_url: '',
             milestone: '',
             milestones: [],
@@ -44,7 +43,7 @@ class AddTime extends Component {
     componentWillMount() {
         this.initialState = this.state;
         // Populate inputs
-        //  this.getSavedData();
+        this.getSavedData();
         // Users
         this.getUserData();
         // Projects
@@ -132,22 +131,21 @@ class AddTime extends Component {
             .catch(error => {
                 console.log(error);
             });
-        api.getTime().then(result => {
-            this.setState({ totalTime: result });
-        });
+        // api.getTime().then(result => {
+        //     this.setState({ totalTime: result });
+        // });
     };
 
     getTimer = () => {
-        //  chrome.runtime.sendMessage({ type: 'getTimer' }, response => {
-        const response = null;
-        if (response) {
-            const hours = `0${new Date(response).getHours() - 1}`.slice(-2);
-            const minutes = `0${new Date(response).getMinutes()}`.slice(-2);
-            this.setState({
-                timerIsRunning: `${hours}:${minutes}`
-            });
-        }
-        //   });
+        chrome.runtime.sendMessage({ type: 'getTimer' }, response => {
+            if (response) {
+                const hours = `0${new Date(response).getHours() - 1}`.slice(-2);
+                const minutes = `0${new Date(response).getMinutes()}`.slice(-2);
+                this.setState({
+                    timerIsRunning: `${hours}:${minutes}`
+                });
+            }
+        });
     };
 
     inputChangeEvent = e => {
@@ -344,7 +342,7 @@ class AddTime extends Component {
             // },
             {
                 type: Select,
-                name: 'job_type',
+                name: 'workType',
                 label: 'Job Type',
                 placeholder: 'Select Work Type',
                 required: true,

@@ -1,7 +1,6 @@
 /* global chrome */
 import axios from 'axios';
 import WP_AUTH from './Auth';
-import Cookies from 'js-cookie';
 
 class WP_API {
     constructor() {
@@ -158,25 +157,25 @@ class WP_API {
         });
     }
 
-    getTime() {
-        return new Promise((resolve, reject) => {
-            chrome.storage.local.get('crmTokenKey', items =>
-                axios({
-                    method: 'get',
-                    url: `${this.url}daily_time/`,
-                    headers: {
-                        Authorization: `Bearer ${items.crmTokenKey}`
-                    }
-                })
-                    .then(response => {
-                        resolve(response.data);
-                    })
-                    .catch(error => {
-                        reject(error);
-                    })
-            );
-        });
-    }
+    // getTime() {
+    //     return new Promise((resolve, reject) => {
+    //         chrome.storage.local.get('crmTokenKey', items =>
+    //             axios({
+    //                 method: 'get',
+    //                 url: `${this.url}daily_time/`,
+    //                 headers: {
+    //                     Authorization: `Bearer ${items.crmTokenKey}`
+    //                 }
+    //             })
+    //                 .then(response => {
+    //                     resolve(response.data);
+    //                 })
+    //                 .catch(error => {
+    //                     reject(error);
+    //                 })
+    //         );
+    //     });
+    // }
 
     static getSavedState(key) {
         return new Promise(resolve => {
