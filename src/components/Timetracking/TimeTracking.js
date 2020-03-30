@@ -371,8 +371,7 @@ class AddTime extends Component {
         return (
             <div className="widget">
                 <header className="section__header">
-                    <h4 className="section__title">AM2 Time Tracking</h4>
-                    <p className="section__subtitle">You tracked {totalTime} today</p>
+                    <h4 className="section__title">MyZone Time Tracking</h4>
                     <Timer
                         timerIsRunning={timerIsRunning}
                         startTimer={this.startTimer}
