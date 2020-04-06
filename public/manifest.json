@@ -1,6 +1,6 @@
 {
-    "name": "AM2 Time Tracking",
-    "version": "1.1",
+    "name": "MyZone Time Tracking",
+    "version": "1.0",
     "manifest_version": 2,
     "browser_action": {
         "default_popup": "index.html"
@@ -15,11 +15,10 @@
     },
     "content_scripts": [
         {
-            "matches": ["https://app.asana.com/*"],
             "js": ["app/content.js"],
             "css": ["app/content.css"]
         }
     ],
-    "permissions": ["storage", "https://oldcrm.am2studio.com/"],
+    "permissions": ["storage", "https://dev-api-myzone-erp.myzone.tech/api/"],
     "content_security_policy": "script-src 'self' 'sha256-GgRxrVOKNdB4LrRsVPDSbzvfdV4UqglmviH9GoBJ5jk='; object-src 'self'"
 }
