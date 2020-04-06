@@ -123,7 +123,9 @@ class AddTime extends Component {
 
     getProjects = () => {
         const api = new WP_API();
-        api.getProjects('projects?pagination=false')
+        api.getProjects(
+            'projects?pagination=false&filters[contracts.id][exists]=1&filters[contracts.status][in][]=in_progress'
+        )
             .then(response => {
                 chrome.storage.local.set({ projects: JSON.stringify(response) });
                 this.setState({ projects: response });
@@ -279,7 +281,7 @@ class AddTime extends Component {
             {
                 type: Time,
                 name: 'hours',
-                label: 'Hours of Work',
+                label: 'Time logged',
                 required: true,
                 value: hours,
                 parentClass: 'column twelve'
@@ -297,10 +299,9 @@ class AddTime extends Component {
             {
                 type: Select,
                 name: 'contract',
-                label: 'Contract',
+                label: 'Project Contract',
                 placeholder: 'Select contract',
                 list: contracts,
-                required: true,
                 value: contract,
                 parentClass: 'column twelve'
             },
@@ -310,7 +311,6 @@ class AddTime extends Component {
                 label: 'Milestone',
                 placeholder: 'Select Milestone',
                 list: milestones,
-                required: true,
                 value: milestone,
                 parentClass: 'column twelve'
             },
@@ -320,7 +320,6 @@ class AddTime extends Component {
                 label: 'Feature',
                 placeholder: 'Select feature',
                 list: features,
-                required: true,
                 value: feature,
                 parentClass: 'column twelve'
             },
@@ -343,7 +342,7 @@ class AddTime extends Component {
             {
                 type: Select,
                 name: 'workType',
-                label: 'Job Type',
+                label: 'Work Type',
                 placeholder: 'Select Work Type',
                 required: true,
                 value: workType,
@@ -353,14 +352,14 @@ class AddTime extends Component {
             {
                 type: Text,
                 name: 'asana_url',
-                label: 'Asana URL',
+                label: 'Task URL',
                 value: asana_url,
                 parentClass: 'column twelve'
             },
             {
                 type: Textarea,
                 name: 'comment',
-                label: 'Comment',
+                label: 'Work Description',
                 rows: '4',
                 required: true,
                 value: comment,

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Loader from '../General/Loader';
-import logo from '../../styles/images/logo.jpg';
+import logo from '../../styles/images/logo.png';
 import '../../styles/css/login.css';
 
 const Login = props => {
@@ -15,7 +15,12 @@ const Login = props => {
                 <div className="wrap-login100">
                     <form className="validate-form">
                         <div className="w-full text-center logo">
-                            <img className="logo" alt="Logo" src={logo} />
+                            <img
+                                className="logo"
+                                alt="Logo"
+                                src={logo}
+                                style={{ width: '100px' }}
+                            />
                         </div>
                         <span className="login100-form-title p-b-239">Account Login</span>
                         {error ? (
