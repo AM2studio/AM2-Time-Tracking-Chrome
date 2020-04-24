@@ -4,7 +4,7 @@ import WP_AUTH from './Auth';
 
 class WP_API {
     constructor() {
-        this.url = 'https://dev-api-myzone-erp.myzone.tech/api/';
+        this.url = 'https://erp2-api.myzone.com/api';
         this.auth = new WP_AUTH();
         this.data = false;
 
