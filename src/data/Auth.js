@@ -3,8 +3,8 @@ import axios from 'axios';
 
 class WP_AUTH {
     constructor() {
-        this.url = 'https://dev-api-myzone-erp.myzone.tech/login';
-        this.validateUrl = 'https://dev-api-myzone-erp.myzone.tech/api/me';
+        this.url = 'https://erp2-api.myzone.com/login';
+        this.validateUrl = 'https://erp2-api.myzone.com/api/me';
         this.tokenKey = 'crmTokenKey';
         this.Email = 'crmEmail';
     }

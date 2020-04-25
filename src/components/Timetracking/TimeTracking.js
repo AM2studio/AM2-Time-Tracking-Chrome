@@ -123,9 +123,7 @@ class AddTime extends Component {
 
     getProjects = () => {
         const api = new WP_API();
-        api.getProjects(
-            'projects?pagination=false&filters[contracts.id][exists]=1&filters[contracts.status][in][]=in_progress'
-        )
+        api.getProjects()
             .then(response => {
                 chrome.storage.local.set({ projects: JSON.stringify(response) });
                 this.setState({ projects: response });

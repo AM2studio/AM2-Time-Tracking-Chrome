@@ -4,7 +4,7 @@ import WP_AUTH from './Auth';
 
 class WP_API {
     constructor() {
-        this.url = 'https://erp2-api.myzone.com/api';
+        this.url = 'https://erp2-api.myzone.com/api/';
         this.auth = new WP_AUTH();
         this.data = false;
 
@@ -61,7 +61,7 @@ class WP_API {
             chrome.storage.local.get('crmTokenKey', items =>
                 axios({
                     method: 'get',
-                    url: `${this.url}${type}`,
+                    url: `${this.url}projects?filters[contracts.id][exists]=1&filters[contracts.status][in][]=in_progress&filters[contracts.is_timetrackable][equals]=true&pagination=false?pagination=false&filters[contracts.id][exists]=1&filters[contracts.status][in][]=in_progress`,
                     headers: {
                         Authorization: `Bearer ${items.crmTokenKey}`
                     },
@@ -114,7 +114,7 @@ class WP_API {
             chrome.storage.local.get('crmTokenKey', items =>
                 axios({
                     method: 'get',
-                    url: `${this.url}contracts?filters[status][in][]=in_progress&filters[project][equals]=${id}`,
+                    url: `${this.url}contracts?filters[status][in][]=in_progress&filters[is_timetrackable][equals]=true&filters[project][equals]=${id}`,
                     headers: {
                         Authorization: `Bearer ${items.crmTokenKey}`
                     }
