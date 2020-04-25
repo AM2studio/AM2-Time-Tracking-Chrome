@@ -1204,7 +1204,7 @@ aws4@^1.8.0:
 
 axios@^0.18.0:
   version "0.18.0"
-  resolved "http://registry.npmjs.org/axios/-/axios-0.18.0.tgz#32d53e4851efdc0a11993b6cd000789d70c05102"
+  resolved "https://registry.npmjs.org/axios/-/axios-0.18.0.tgz#32d53e4851efdc0a11993b6cd000789d70c05102"
   dependencies:
     follow-redirects "^1.3.0"
     is-buffer "^1.1.5"
@@ -2106,7 +2106,7 @@ core-js@2.5.7, core-js@^2.4.0, core-js@^2.5.0:
 
 core-js@^1.0.0:
   version "1.2.7"
-  resolved "http://registry.npmjs.org/core-js/-/core-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
+  resolved "https://registry.npmjs.org/core-js/-/core-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -4804,8 +4804,8 @@ js-tokens@^3.0.2:
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"
 
 js-yaml@^3.12.0, js-yaml@^3.7.0, js-yaml@^3.9.0:
-  version "3.12.0"
-  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.12.0.tgz#eaed656ec8344f10f527c6bfa1b6e2244de167d1"
+  version "3.13.1"
+  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.13.1.tgz#aff151b30bfdfa8e49e05da22e7415e9dfa37847"
   dependencies:
     argparse "^1.0.7"
     esprima "^4.0.0"
@@ -6872,7 +6872,7 @@ react-app-polyfill@^0.1.3:
 
 react-bootstrap-typeahead@^2.4.0:
   version "2.6.0"
-  resolved "http://registry.npmjs.org/react-bootstrap-typeahead/-/react-bootstrap-typeahead-2.6.0.tgz#d18fd808df2b2f339bd137ff36d7f4b0e6c2cb26"
+  resolved "https://registry.npmjs.org/react-bootstrap-typeahead/-/react-bootstrap-typeahead-2.6.0.tgz#d18fd808df2b2f339bd137ff36d7f4b0e6c2cb26"
   dependencies:
     classnames "^2.2.0"
     escape-string-regexp "^1.0.5"
